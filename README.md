@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SparkMatch 💘
+
+> A modern, feature-rich dating app built with React Native & Expo
+
+![SparkMatch Banner](https://via.placeholder.com/1200x400/FF4B6E/FFFFFF?text=SparkMatch+%F0%9F%92%98)
+
+## Overview
+
+SparkMatch is a full-featured dating app inspired by Tinder and Hinge, built with a stunning dark-mode UI featuring smooth animations, gesture-based interactions, and a beautiful pink-to-purple gradient design language.
+
+## Features
+
+- **Swipe Cards** — Full-screen animated profile cards with swipe left/right/up gestures
+- **Like / Nope / Super Like** — Visual overlays and satisfying animations
+- **It's a Match!** — Confetti celebration screen when two users like each other
+- **Chat** — Clean real-time-style messaging UI
+- **Discover** — Grid-browse profiles beyond your swipe queue
+- **Onboarding** — Beautiful multi-step profile setup flow
+- **Settings** — Preferences, distance, age range controls
+
+## Tech Stack
+
+| Tool | Purpose |
+|------|---------|
+| React Native + Expo | Cross-platform mobile framework |
+| TypeScript | Type safety |
+| React Navigation v6 | Navigation (stack + tabs) |
+| Zustand | Lightweight state management |
+| React Native Reanimated | Smooth animations |
+| React Native Gesture Handler | Swipe gestures |
+| Expo Linear Gradient | Gradient backgrounds |
+| Expo Blur | Glassmorphism effects |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Install dependencies
+npm install
+
+# Start the development server
+npx expo start
+
+# Run on iOS simulator
+npx expo start --ios
+
+# Run on Android emulator
+npx expo start --android
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+sparkmatch/
+├── App.tsx                    # Root component
+├── src/
+│   ├── navigation/            # Navigation setup
+│   │   ├── index.tsx
+│   │   ├── AuthNavigator.tsx
+│   │   └── AppNavigator.tsx
+│   ├── screens/
+│   │   ├── auth/              # Welcome, Login, SignUp, Onboarding
+│   │   ├── home/              # Swipe + Match screens
+│   │   ├── messages/          # Chat list + Chat
+│   │   ├── profile/           # Own profile + View others
+│   │   ├── discover/          # Grid discover
+│   │   └── settings/          # App settings
+│   ├── components/            # Reusable UI components
+│   ├── store/                 # Zustand state stores
+│   ├── data/                  # Mock data
+│   ├── types/                 # TypeScript types
+│   ├── theme/                 # Colors, typography, spacing
+│   └── utils/                 # Helper functions
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Design System
 
-## Learn More
+| Token | Value | Usage |
+|-------|-------|-------|
+| Primary | `#FF4B6E` | Buttons, active states |
+| Secondary | `#7B2FBE` | Gradients, accents |
+| Background | `#0F0F1A` | App background |
+| Card | `#1A1A2E` | Card surfaces |
+| Gold | `#FFD700` | Super like |
+| Text Primary | `#FFFFFF` | Headings |
+| Text Secondary | `#B0B0C3` | Body, captions |
 
-To learn more about Next.js, take a look at the following resources:
+## Screenshots
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> Run the app locally to see the full experience!
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT © SparkMatch
