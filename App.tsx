@@ -1,32 +1,26 @@
-import React, { useEffect } from 'react';
+import 'react-native-gesture-handler';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { NavigationContainer } from '@react-navigation/native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import RootNavigator from './src/navigation';
-import { colors } from './src/theme/colors';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { StyleSheet } from 'react-native';
+import { RootNavigator } from './src/navigation';
+import { Colors } from './src/theme/colors';
 
 export default function App() {
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={styles.root}>
       <SafeAreaProvider>
-        <NavigationContainer
-          theme={{
-            dark: true,
-            colors: {
-              primary: colors.primary,
-              background: colors.background,
-              card: colors.cardBackground,
-              text: colors.textPrimary,
-              border: colors.border,
-              notification: colors.primary,
-            },
-          }}
-        >
-          <StatusBar style="light" />
-          <RootNavigator />
-        </NavigationContainer>
+        <StatusBar style="light" backgroundColor={Colors.background} />
+        <RootNavigator />
       </SafeAreaProvider>
     </GestureHandlerRootView>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
+});
