@@ -1,35 +1,44 @@
 # SparkMatch 💘
 
-> A modern, feature-rich dating app built with React Native & Expo
+A modern, feature-rich dating app built with React Native + Expo. Think Tinder meets Hinge with a bold, beautiful twist.
 
-![SparkMatch Banner](https://via.placeholder.com/1200x400/FF4B6E/FFFFFF?text=SparkMatch+%F0%9F%92%98)
+## Screenshots
 
-## Overview
-
-SparkMatch is a full-featured dating app inspired by Tinder and Hinge, built with a stunning dark-mode UI featuring smooth animations, gesture-based interactions, and a beautiful pink-to-purple gradient design language.
-
-## Features
-
-- **Swipe Cards** — Full-screen animated profile cards with swipe left/right/up gestures
-- **Like / Nope / Super Like** — Visual overlays and satisfying animations
-- **It's a Match!** — Confetti celebration screen when two users like each other
-- **Chat** — Clean real-time-style messaging UI
-- **Discover** — Grid-browse profiles beyond your swipe queue
-- **Onboarding** — Beautiful multi-step profile setup flow
-- **Settings** — Preferences, distance, age range controls
+> SparkMatch features a stunning dark UI with vibrant pink-to-purple gradients, smooth swipe animations, real-time chat, and an engaging onboarding experience.
 
 ## Tech Stack
 
-| Tool | Purpose |
-|------|---------|
+| Technology | Purpose |
+|---|---|
 | React Native + Expo | Cross-platform mobile framework |
 | TypeScript | Type safety |
-| React Navigation v6 | Navigation (stack + tabs) |
-| Zustand | Lightweight state management |
-| React Native Reanimated | Smooth animations |
+| React Navigation v6 | Routing (stack + bottom tabs) |
+| Zustand | Lightweight global state |
+| React Native Reanimated | Fluid animations |
 | React Native Gesture Handler | Swipe gestures |
-| Expo Linear Gradient | Gradient backgrounds |
+| Expo Linear Gradient | Beautiful gradients |
 | Expo Blur | Glassmorphism effects |
+
+## Features
+
+- **Swipe Cards** — Full-screen animated profile cards with Like / Nope / Super Like gestures
+- **Match Celebration** — Confetti overlay when two users match
+- **Chat** — Clean messaging UI with timestamps and read receipts
+- **Discover** — Grid browse view of nearby profiles
+- **Onboarding** — Multi-step profile setup (photos, bio, interests, preferences)
+- **Settings** — Preference controls for distance, age range, and account management
+
+## Color Palette
+
+```
+Primary   #FF4B6E  Hot pink/coral
+Secondary #7B2FBE  Purple
+Gradient  #FF4B6E → #7B2FBE
+Bg        #0F0F1A  Near black
+Card      #1A1A2E
+Text      #FFFFFF / #B0B0C3
+Accent    #FFD700  Gold (super like)
+```
 
 ## Getting Started
 
@@ -37,56 +46,72 @@ SparkMatch is a full-featured dating app inspired by Tinder and Hinge, built wit
 # Install dependencies
 npm install
 
-# Start the development server
+# Start Expo
 npx expo start
 
 # Run on iOS simulator
-npx expo start --ios
+npx expo run:ios
 
 # Run on Android emulator
-npx expo start --android
+npx expo run:android
 ```
 
 ## Project Structure
 
 ```
-sparkmatch/
-├── App.tsx                    # Root component
+SparkMatch/
+├── App.tsx                          # Root entry
 ├── src/
-│   ├── navigation/            # Navigation setup
-│   │   ├── index.tsx
+│   ├── navigation/
+│   │   ├── index.tsx                # Root navigator
 │   │   ├── AuthNavigator.tsx
-│   │   └── AppNavigator.tsx
+│   │   └── AppNavigator.tsx         # Bottom tabs
 │   ├── screens/
-│   │   ├── auth/              # Welcome, Login, SignUp, Onboarding
-│   │   ├── home/              # Swipe + Match screens
-│   │   ├── messages/          # Chat list + Chat
-│   │   ├── profile/           # Own profile + View others
-│   │   ├── discover/          # Grid discover
-│   │   └── settings/          # App settings
-│   ├── components/            # Reusable UI components
-│   ├── store/                 # Zustand state stores
-│   ├── data/                  # Mock data
-│   ├── types/                 # TypeScript types
-│   ├── theme/                 # Colors, typography, spacing
-│   └── utils/                 # Helper functions
+│   │   ├── auth/
+│   │   │   ├── WelcomeScreen.tsx
+│   │   │   ├── LoginScreen.tsx
+│   │   │   ├── SignUpScreen.tsx
+│   │   │   └── OnboardingScreen.tsx
+│   │   ├── home/
+│   │   │   ├── SwipeScreen.tsx
+│   │   │   └── MatchScreen.tsx
+│   │   ├── messages/
+│   │   │   ├── ChatListScreen.tsx
+│   │   │   └── ChatScreen.tsx
+│   │   ├── profile/
+│   │   │   ├── ProfileScreen.tsx
+│   │   │   └── ViewProfileScreen.tsx
+│   │   ├── discover/
+│   │   │   └── DiscoverScreen.tsx
+│   │   └── settings/
+│   │       └── SettingsScreen.tsx
+│   ├── components/
+│   │   ├── SwipeCard.tsx
+│   │   ├── ActionButtons.tsx
+│   │   ├── ProfilePhoto.tsx
+│   │   ├── Badge.tsx
+│   │   ├── MatchAnimation.tsx
+│   │   ├── MessageBubble.tsx
+│   │   ├── ProgressBar.tsx
+│   │   ├── GradientButton.tsx
+│   │   ├── BackButton.tsx
+│   │   └── Avatar.tsx
+│   ├── store/
+│   │   ├── useAuthStore.ts
+│   │   ├── useSwipeStore.ts
+│   │   └── useChatStore.ts
+│   ├── data/
+│   │   ├── mockProfiles.ts
+│   │   └── mockMessages.ts
+│   ├── types/
+│   │   └── index.ts
+│   ├── theme/
+│   │   ├── colors.ts
+│   │   ├── typography.ts
+│   │   └── spacing.ts
+│   └── utils/
+│       └── helpers.ts
 ```
-
-## Design System
-
-| Token | Value | Usage |
-|-------|-------|-------|
-| Primary | `#FF4B6E` | Buttons, active states |
-| Secondary | `#7B2FBE` | Gradients, accents |
-| Background | `#0F0F1A` | App background |
-| Card | `#1A1A2E` | Card surfaces |
-| Gold | `#FFD700` | Super like |
-| Text Primary | `#FFFFFF` | Headings |
-| Text Secondary | `#B0B0C3` | Body, captions |
-
-## Screenshots
-
-> Run the app locally to see the full experience!
 
 ## License
 
