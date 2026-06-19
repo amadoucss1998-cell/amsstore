@@ -7,9 +7,7 @@ export type Country = {
 };
 
 export type Gender = 'man' | 'woman' | 'non-binary';
-
 export type VerificationStatus = 'none' | 'phone' | 'photo' | 'id';
-
 export type SubscriptionPlan = 'free' | 'gold' | 'platinum';
 
 export interface Profile {
@@ -27,7 +25,7 @@ export interface Profile {
   premium: SubscriptionPlan;
   lat?: number;
   lng?: number;
-  lastActive: Date;
+  lastActive: string;
   distance?: number;
   safetyMode?: boolean;
 }
@@ -37,9 +35,9 @@ export interface Match {
   userId: string;
   profile: Profile;
   lastMessage?: string;
-  lastMessageAt?: Date;
+  lastMessageAt?: string;
   unreadCount: number;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface Message {
@@ -49,47 +47,10 @@ export interface Message {
   content: string;
   read: boolean;
   flagged: boolean;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface SwipeAction {
   type: 'like' | 'pass' | 'super';
   targetId: string;
 }
-
-export type RootStackParamList = {
-  Auth: undefined;
-  App: undefined;
-};
-
-export type AuthStackParamList = {
-  Welcome: undefined;
-  Phone: undefined;
-  OTP: { phone: string; countryCode: string };
-  ProfileSetup: undefined;
-  PhotoUpload: undefined;
-};
-
-export type AppTabParamList = {
-  Discover: undefined;
-  Matches: undefined;
-  Profile: undefined;
-};
-
-export type DiscoverStackParamList = {
-  DiscoverMain: undefined;
-  MatchCelebration: { matchId: string; profile: Profile };
-  ViewProfile: { profile: Profile };
-};
-
-export type MatchesStackParamList = {
-  ChatList: undefined;
-  Chat: { match: Match };
-};
-
-export type ProfileStackParamList = {
-  MyProfile: undefined;
-  Settings: undefined;
-  Subscription: undefined;
-  Verification: undefined;
-};

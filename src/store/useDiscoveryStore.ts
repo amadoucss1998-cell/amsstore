@@ -1,50 +1,34 @@
 import { create } from 'zustand';
-import { Profile, SwipeAction } from '../types';
+import { Profile } from '../types';
 import { MOCK_PROFILES } from '../data/mockProfiles';
 
 interface DiscoveryState {
   profiles: Profile[];
-  swipedIds: string[];
-  newMatch: Profile | null;
-  likeCount: number;
-  maxLikes: number;
-  swipe: (action: SwipeAction) => { matched: boolean };
-  clearMatch: () => void;
+  history: { type: 'like' | 'pass' | 'super'; profile: Profile }[];
+  lastMatch: Profile | null;
+  swipe: (type: 'like' | 'pass' | 'super', profile: Profile) => void;
   undoLast: () => void;
-  resetLikes: () => void;
+  clearMatch: () => void;
 }
 
-export const useDiscoveryStore = create<DiscoveryState>((set, get) => ({
+export const useDiscoveryStore = create<DiscoveryState>()((set) => ({
   profiles: [...MOCK_PROFILES],
-  swipedIds: [],
-  newMatch: null,
-  likeCount: 0,
-  maxLikes: 10,
-  swipe: (action) => {
-    const { profiles, likeCount, maxLikes } = get();
-    const top = profiles[profiles.length - 1];
-    if (!top) return { matched: false };
-    const isLike = action.type === 'like' || action.type === 'super';
-    const matched = isLike && Math.random() < 0.4;
-    set((s) => ({
-      profiles: s.profiles.slice(0, -1),
-      swipedIds: [...s.swipedIds, top.id],
-      newMatch: matched ? top : null,
-      likeCount: isLike ? likeCount + 1 : likeCount,
-    }));
-    return { matched };
-  },
-  clearMatch: () => set({ newMatch: null }),
-  undoLast: () => {
-    const { swipedIds } = get();
-    if (!swipedIds.length) return;
-    const lastId = swipedIds[swipedIds.length - 1];
-    const profile = MOCK_PROFILES.find((p) => p.id === lastId);
-    if (!profile) return;
-    set((s) => ({
-      profiles: [...s.profiles, profile],
-      swipedIds: s.swipedIds.slice(0, -1),
-    }));
-  },
-  resetLikes: () => set({ likeCount: 0 }),
+  history: [],
+  lastMatch: null,
+  swipe: (type, profile) =>
+    set((s) => {
+      const matched = type === 'super' ? true : type === 'like' ? Math.random() > 0.6 : false;
+      return {
+        profiles: s.profiles.filter((p) => p.id !== profile.id),
+        history: [{ type, profile }, ...s.history],
+        lastMatch: matched ? profile : null,
+      };
+    }),
+  undoLast: () =>
+    set((s) => {
+      if (!s.history.length) return s;
+      const [last, ...rest] = s.history;
+      return { profiles: [last.profile, ...s.profiles], history: rest };
+    }),
+  clearMatch: () => set({ lastMatch: null }),
 }));

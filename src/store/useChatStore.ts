@@ -1,68 +1,50 @@
 import { create } from 'zustand';
 import { Match, Message } from '../types';
-import { MOCK_MATCHES } from '../data/mockProfiles';
+import { MOCK_MATCHES, MOCK_MESSAGES } from '../data/mockProfiles';
 
-const MOCK_MESSAGES: Record<string, Message[]> = {
-  m1: [
-    { id: 'msg1', matchId: 'm1', senderId: 'p1', content: 'Hey! We matched 😊', read: true, flagged: false, createdAt: new Date(Date.now() - 60000 * 30) },
-    { id: 'msg2', matchId: 'm1', senderId: 'me', content: 'Hi Amara! Great to match with you!', read: true, flagged: false, createdAt: new Date(Date.now() - 60000 * 20) },
-    { id: 'msg3', matchId: 'm1', senderId: 'p1', content: 'Would love to grab coffee sometime! ☕', read: false, flagged: false, createdAt: new Date(Date.now() - 60000 * 15) },
-  ],
-  m2: [
-    { id: 'msg4', matchId: 'm2', senderId: 'me', content: 'I read your article about Liberia\'s tech scene', read: true, flagged: false, createdAt: new Date(Date.now() - 60000 * 130) },
-    { id: 'msg5', matchId: 'm2', senderId: 'p4', content: 'That article you mentioned sounds interesting', read: true, flagged: false, createdAt: new Date(Date.now() - 60000 * 120) },
-  ],
-};
+const AUTO_REPLIES = [
+  'Haha that\'s so true! 😄',
+  'Tell me more about that 👀',
+  'Wow, I feel the same way!',
+  'That\'s really interesting 🤔',
+  'I\'d love to hear more about you!',
+  'You seem really cool 😊',
+];
 
 interface ChatState {
   matches: Match[];
   messages: Record<string, Message[]>;
-  isTyping: Record<string, boolean>;
-  sendMessage: (matchId: string, content: string, senderId: string) => void;
-  markRead: (matchId: string) => void;
+  typing: string | null;
+  sendMessage: (matchId: string, content: string) => void;
 }
 
-export const useChatStore = create<ChatState>((set, get) => ({
-  matches: MOCK_MATCHES as Match[],
+export const useChatStore = create<ChatState>()((set) => ({
+  matches: MOCK_MATCHES,
   messages: MOCK_MESSAGES,
-  isTyping: {},
-  sendMessage: (matchId, content, senderId) => {
+  typing: null,
+  sendMessage: (matchId, content) => {
     const msg: Message = {
-      id: `msg_${Date.now()}`,
-      matchId,
-      senderId,
-      content,
-      read: false,
-      flagged: false,
-      createdAt: new Date(),
+      id: Date.now().toString(),
+      matchId, senderId: 'me', content, read: true, flagged: false,
+      createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
     set((s) => ({
-      messages: { ...s.messages, [matchId]: [...(s.messages[matchId] || []), msg] },
-      matches: s.matches.map((m) => m.id === matchId ? { ...m, lastMessage: content, lastMessageAt: new Date(), unreadCount: 0 } : m),
+      messages: { ...s.messages, [matchId]: [...(s.messages[matchId] ?? []), msg] },
+      typing: matchId,
     }));
-    // Simulate reply
-    set((s) => ({ isTyping: { ...s.isTyping, [matchId]: true } }));
-    const replies = ['Haha 😄', 'That\'s so true!', 'Tell me more 👀', 'I like that ❤️', 'For real! 😂'];
     setTimeout(() => {
-      const match = get().matches.find((m) => m.id === matchId);
-      if (!match) return;
       const reply: Message = {
-        id: `msg_${Date.now()}_r`,
+        id: (Date.now() + 1).toString(),
         matchId,
-        senderId: match.userId,
-        content: replies[Math.floor(Math.random() * replies.length)],
-        read: false,
-        flagged: false,
-        createdAt: new Date(),
+        senderId: MOCK_MATCHES.find((m) => m.id === matchId)?.profile.id ?? '',
+        content: AUTO_REPLIES[Math.floor(Math.random() * AUTO_REPLIES.length)],
+        read: false, flagged: false,
+        createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
       set((s) => ({
-        messages: { ...s.messages, [matchId]: [...(s.messages[matchId] || []), reply] },
-        isTyping: { ...s.isTyping, [matchId]: false },
+        messages: { ...s.messages, [matchId]: [...(s.messages[matchId] ?? []), reply] },
+        typing: null,
       }));
-    }, 2000 + Math.random() * 2000);
+    }, 1800);
   },
-  markRead: (matchId) => set((s) => ({
-    matches: s.matches.map((m) => m.id === matchId ? { ...m, unreadCount: 0 } : m),
-    messages: { ...s.messages, [matchId]: (s.messages[matchId] || []).map((msg) => ({ ...msg, read: true })) },
-  })),
 }));

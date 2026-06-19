@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #050508;
+  color: #fff;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+  min-height: 100svh;
+}
+
+.shell {
+  width: 100%;
+  max-width: 430px;
+  min-height: 100svh;
+  background: #0D0D1A;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .shell {
+    box-shadow: 0 0 80px rgba(255, 107, 53, 0.15), 0 0 0 1px rgba(255,107,53,0.08);
+  }
+}
+
+.gradient-primary {
+  background: linear-gradient(135deg, #FF6B35, #FF4500);
+}
+
+.gradient-card {
+  background: linear-gradient(to bottom, transparent, rgba(13,13,26,0.95));
+}
+
+.safe-top { padding-top: env(safe-area-inset-top, 44px); }
+.safe-bottom { padding-bottom: env(safe-area-inset-bottom, 20px); }
