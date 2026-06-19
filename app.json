@@ -13,6 +13,11 @@
     "android": {
       "adaptiveIcon": { "backgroundColor": "#0D0D1A" },
       "package": "com.spark.dating.lr"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": null
     }
   }
 }
