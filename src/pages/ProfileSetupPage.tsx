@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/useAuthStore';
 import { Gender } from '../types';
+import PhotoUpload from '../components/PhotoUpload';
 
 const CITIES = ['Monrovia', 'Gbarnga', 'Buchanan', 'Harbel', 'Voinjama', 'Freetown', 'Accra', 'Lagos', 'Abidjan'];
 const INTERESTS = ['Music', 'Travel', 'Food', 'Sports', 'Art', 'Tech', 'Fashion', 'Faith', 'Movies', 'Fitness', 'Gaming', 'Business'];
@@ -10,6 +11,7 @@ export default function ProfileSetupPage() {
   const navigate = useNavigate();
   const updateProfile = useAuthStore((s) => s.updateProfile);
 
+  const [photos, setPhotos] = useState<string[]>([]);
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [gender, setGender] = useState<Gender>('man');
@@ -21,14 +23,19 @@ export default function ProfileSetupPage() {
     setInterests((prev) => prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]);
 
   const handleSave = () => {
-    updateProfile({ name, age: parseInt(age) || 20, gender, city, bio, interests });
+    updateProfile({ name, age: parseInt(age) || 20, gender, city, bio, interests, photos });
     navigate('/discover');
   };
 
   return (
     <div className="flex flex-col min-h-screen px-6 pt-14 pb-10 overflow-y-auto">
       <h2 className="text-3xl font-bold mb-1">Set up your profile</h2>
-      <p className="text-dim mb-8">Tell the community about yourself.</p>
+      <p className="text-dim mb-6">Tell the community about yourself.</p>
+
+      <label className="text-sm text-dim mb-2">Photos (up to 6)</label>
+      <div className="mb-6">
+        <PhotoUpload photos={photos} onChange={setPhotos} />
+      </div>
 
       <label className="text-sm text-dim mb-1">Name</label>
       <input
