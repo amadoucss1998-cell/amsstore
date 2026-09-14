@@ -1,12 +1,16 @@
-# SPARK Dating App
+# LifeOS
 
-West Africa's first safety-first dating app, built for Liberia.
+Essential life skills for everyone — finance, health, cooking, legal rights, relationships, career, home & digital safety.
 
 ## Stack
-- React Native + Expo
-- Zustand state management
-- React Navigation
-- expo-linear-gradient
+
+- React 18 + TypeScript
+- Vite
+- Tailwind CSS
+- React Router v6
+- Zustand (persisted progress & bookmarks)
+- Lucide React icons
 
 ## Deploy
-Built for Vercel via `expo export --platform web`.
+
+Connect to Vercel — `vite build` → `dist/`
